@@ -1,1 +1,1 @@
-# SIH-Website
+# SIH
