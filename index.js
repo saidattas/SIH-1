@@ -1,57 +1,90 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
+// var admin = require('firebase-admin');
+var firebase = require('firebase');
 
-var firebase = require('firebase/app');
 require('firebase/auth');
 require('firebase/database');
-  // Your web app's Firebase configuration
+
+// Your web app's Firebase configuration
 var firebaseConfig = {
-    apiKey: "AIzaSyCFCb5gEtIvhnEsmajaz3pQZLE87GuWsk4",
-    authDomain: "sih-app-18e73.firebaseapp.com",
-    databaseURL: "https://sih-app-18e73.firebaseio.com",
-    projectId: "sih-app-18e73",
-    storageBucket: "sih-app-18e73.appspot.com",
-    messagingSenderId: "741492458591",
-    appId: "1:741492458591:web:b74e50dd2f0f330048c7ea",
-    measurementId: "G-SNG2EE3MS2"
-  };
-firebase.initializeApp(firebaseConfig);
-//Reference database service
-// var database = firebase.database();
-// const auth = firebase.auth()
-
-// firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-// 	// Handle Errors here.
-// 	var errorCode = error.code;
-// 	var errorMessage = error.message;
-// 	// ...
-// });
-
-app.get('/register', function(req, res) {
-	res.render('register');
-	firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error){
-		//Handels errors here
-		var errorCode = error.code;
-		var errorMessage = error.message;
-	});
-});
-
-app.get('/login', function(req, res) {
-	res.render('login');
-
-});
+	apiKey: 'AIzaSyCFCb5gEtIvhnEsmajaz3pQZLE87GuWsk4',
+	authDomain: 'sih-app-18e73.firebaseapp.com',
+	databaseURL: 'https://sih-app-18e73.firebaseio.com',
+	projectId: 'sih-app-18e73',
+	storageBucket: 'sih-app-18e73.appspot.com',
+	messagingSenderId: '741492458591',
+	appId: '1:741492458591:web:b74e50dd2f0f330048c7ea',
+	measurementId: 'G-SNG2EE3MS2'
+};
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
+const rootref = database.ref('PROFILES');
 app.get('/', function(req, res) {
 	res.render('home');
 });
+app.get('/login', function(req, res) {
+	res.render('login');
+});
+app.post('/login', function(req, res) {
+	var email = req.body.email;
+	var password = req.body.password;
+	const auth = firebase.auth();
+	const promise = auth.signInWithEmailAndPassword(email, password);
+	promise.catch((e) => console.log(e.message));
+	auth.onAuthStateChanged((firebaseUser) => {
+		if (firebaseUser) {
+			console.log(firebaseUser.uid);
+			console.log('Logged In!');
+		} else {
+			res.redirect('/login');
+		}
+	});
+});
+
 app.get('/register', function(req, res) {
 	res.render('register');
 });
+app.post('/register', function(req, res) {
+	var fname = req.body.fname;
+	var lname = req.body.lname;
+	var username = fname + ` ` + lname;
+	var email = req.body.email;
+	var password = req.body.password;
+	var date = req.body.datepicker;
+	// var date1 = date.replace('-', ',');
+	var faddress = req.body.faddress;
+	var laddress = req.body.laddess;
+	var phone = req.body.phone;
+	var location = faddress + ` ` + laddress;
+	var pin = req.body.pin;
+	const auth = firebase.auth();
+	const promise = auth.createUserWithEmailAndPassword(email, password);
+	promise.catch((e) => console.log(e.message));
+	auth.onAuthStateChanged((firebaseUser) => {
+		if (firebaseUser) {
+			var obj = {
+				dob: date,
+				location: location,
+				phonenumber: phone,
+				pincode: pin,
+				userEmail: email,
+				userName: username
+			};
+			rootref.child('USERS').child(firebaseUser.uid).set(obj);
+		} else {
+			console.log('error');
+			//res.redirect("/")
+		}
+	});
+});
+
 app.get('/productDetail', function(req, res) {
 	res.render('productDetails');
 });
