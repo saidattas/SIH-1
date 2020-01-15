@@ -28,7 +28,7 @@ var database = firebase.database();
 const rootref = database.ref('PROFILES');
 
 app.get('/', function(req, res) {
-	res.render('home');
+	res.redirect('/login');
 });
 app.get('/login', function(req, res) {
 	res.render('login');
@@ -43,14 +43,13 @@ app.post('/login', function(req, res) {
 		if (firebaseUser) {
 			console.log('Logged In!');
 			var ref = database.ref('PROFILES');
-	        ref.child('USERS').on('value',function(snapshot){
-		    console.log(snapshot.child(firebaseUser.uid).child('location').val());
-	})
+			ref.child('USERS').on('value', function(snapshot) {
+				console.log(snapshot.child(firebaseUser.uid).child('location').val());
+			});
 		} else {
 			res.redirect('/login');
 		}
 	});
-
 });
 
 app.get('/register', function(req, res) {
@@ -76,36 +75,36 @@ app.post('/register', function(req, res) {
 		if (firebaseUser) {
 			var obj = {
 				dob: date,
-				location: loca-repotion,
+				location: location,
 				phonenumber: phone,
 				pincode: pin,
 				userEmail: email,
-				userName: username,
+				userName: username
 			};
-			rootref.child('USERS').child(firebaseUser.uid).set(obj);
-			res.redirect('/login');
+			// rootref.child('USERS').child(firebaseUser.uid).set(obj); to access data from user
 		} else {
 			console.log('error');
-			res.redirect("/register")
+			res.redirect('/register');
 		}
 	});
+	res.redirect('/login');
 });
 
-app.get('/myAccount', function(req, res){
+app.get('/myAccount', function(req, res) {
 	// res.render('myAccount');
 	// firebase.auth().onAuthStateChanged((firebaseUser) => {
-		// uId = firebaseUser.uid;
-		// console.log(uId);
+	// uId = firebaseUser.uid;
+	// console.log(uId);
 
-		// var ref = database.ref('PROFILES');
-		// ref.child('USERS').on('value',function(snapshot){
-		// console.log(snapshot.child(firebase.auth().currentUser.uid).val());
+	// var ref = database.ref('PROFILES');
+	// ref.child('USERS').on('value',function(snapshot){
+	// console.log(snapshot.child(firebase.auth().currentUser.uid).val());
 	// });
 	// console.log(firebase.auth().currentUser);
 	var ref = database.ref('PROFILES');
-		ref.child('USERS').on('value',function(snapshot){
-			console.log(snapshot.val());
-		})
+	ref.child('USERS').on('value', function(snapshot) {
+		console.log(snapshot.val());
+	});
 });
 
 // app.post('/myAccount', function(req, res){
