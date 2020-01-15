@@ -1,0 +1,22 @@
+body{
+    background: url("crop2.jpg");
+    background-color: #cccccc; /* Used if the image is unavailable */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover auto;
+    color:white;
+}
+h1{
+    color:white;
+}
+.container {
+    width: 50%;
+    margin-top: 10%;
+    padding: 5%;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.create{
+    margin: auto;
+    padding-right: 30px;
+}

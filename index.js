@@ -3,7 +3,9 @@ var express = require('express');
 var app = express();
 // var admin = require('firebase-admin');
 var firebase = require('firebase');
-
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 require('firebase/auth');
 require('firebase/database');
 
@@ -18,10 +20,6 @@ var firebaseConfig = {
 	appId: '1:741492458591:web:b74e50dd2f0f330048c7ea',
 	measurementId: 'G-SNG2EE3MS2'
 };
-
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
 
 firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
