@@ -40,15 +40,21 @@ app.post('/login', function(req, res) {
 	auth.onAuthStateChanged((firebaseUser) => {
 		if (firebaseUser) {
 			console.log('Logged In!');
-			var ref = database.ref('PROFILES');
-			ref.child('USERS').on('value', function(snapshot) {
-				console.log(snapshot.child(firebaseUser.uid).child('location').val());
-			});
+			res.redirect('/landing');
 		} else {
-			res.redirect('/login');
+			//res.redirect('/login');
 		}
 	});
 });
+
+app.get('/landing', function(req,res){
+	res.render('landing');
+});
+
+app.get('/productDetails', function(req, res){
+	res.render('productDetails');
+});
+
 
 app.get('/register', function(req, res) {
 	res.render('register');
@@ -60,7 +66,6 @@ app.post('/register', function(req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
 	var date = req.body.datepicker;
-	// var date1 = date.replace('-', ',');
 	var faddress = req.body.faddress;
 	var laddress = req.body.laddess;
 	var phone = req.body.phone;
@@ -79,7 +84,9 @@ app.post('/register', function(req, res) {
 				userEmail: email,
 				userName: username
 			};
-			// rootref.child('USERS').child(firebaseUser.uid).set(obj); to access data from user
+			rootref.child('USERS').child(firebaseUser.uid).set(obj);
+			console.log("Signed In!");
+			red.redirect('/login');
 		} else {
 			console.log('error');
 			res.redirect('/register');
@@ -89,28 +96,18 @@ app.post('/register', function(req, res) {
 });
 
 app.get('/myAccount', function(req, res) {
-	// res.render('myAccount');
-	// firebase.auth().onAuthStateChanged((firebaseUser) => {
-	// uId = firebaseUser.uid;
-	// console.log(uId);
-
-	// var ref = database.ref('PROFILES');
-	// ref.child('USERS').on('value',function(snapshot){
-	// console.log(snapshot.child(firebase.auth().currentUser.uid).val());
-	// });
-	// console.log(firebase.auth().currentUser);
 	var ref = database.ref('PROFILES');
 	ref.child('USERS').on('value', function(snapshot) {
 		console.log(snapshot.val());
 	});
 });
 
-// app.post('/myAccount', function(req, res){
-
-// });
-
 app.get('/productDetail', function(req, res) {
 	res.render('productDetails');
+});
+
+app.get('/logout', function(req, res){
+	res.render('/login');
 });
 
 app.listen(3000, () => {
