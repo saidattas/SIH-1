@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 const rootref = database.ref('PROFILES');
+
 app.get('/', function(req, res) {
 	res.render('home');
 });
@@ -40,12 +41,16 @@ app.post('/login', function(req, res) {
 	promise.catch((e) => console.log(e.message));
 	auth.onAuthStateChanged((firebaseUser) => {
 		if (firebaseUser) {
-			console.log(firebaseUser.uid);
 			console.log('Logged In!');
+			var ref = database.ref('PROFILES');
+	        ref.child('USERS').on('value',function(snapshot){
+		    console.log(snapshot.child(firebaseUser.uid).child('location').val());
+	})
 		} else {
 			res.redirect('/login');
 		}
 	});
+
 });
 
 app.get('/register', function(req, res) {
@@ -71,19 +76,41 @@ app.post('/register', function(req, res) {
 		if (firebaseUser) {
 			var obj = {
 				dob: date,
-				location: location,
+				location: loca-repotion,
 				phonenumber: phone,
 				pincode: pin,
 				userEmail: email,
-				userName: username
+				userName: username,
 			};
 			rootref.child('USERS').child(firebaseUser.uid).set(obj);
+			res.redirect('/login');
 		} else {
 			console.log('error');
-			//res.redirect("/")
+			res.redirect("/register")
 		}
 	});
 });
+
+app.get('/myAccount', function(req, res){
+	// res.render('myAccount');
+	// firebase.auth().onAuthStateChanged((firebaseUser) => {
+		// uId = firebaseUser.uid;
+		// console.log(uId);
+
+		// var ref = database.ref('PROFILES');
+		// ref.child('USERS').on('value',function(snapshot){
+		// console.log(snapshot.child(firebase.auth().currentUser.uid).val());
+	// });
+	// console.log(firebase.auth().currentUser);
+	var ref = database.ref('PROFILES');
+		ref.child('USERS').on('value',function(snapshot){
+			console.log(snapshot.val());
+		})
+});
+
+// app.post('/myAccount', function(req, res){
+
+// });
 
 app.get('/productDetail', function(req, res) {
 	res.render('productDetails');
