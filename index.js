@@ -43,7 +43,7 @@ app.post('/login', function(req, res) {
 			rootref.child('USERS').on('value', function(snapshot){ // print who was log in
 				console.log(snapshot.child(firebaseUser.uid).child('userName').val() + " logged in!");
 			});
-			res.redirect('/landing');
+			res.redirect('/dashboard');
 		} else {
 			//res.redirect('/login');
 		}
@@ -68,6 +68,7 @@ app.post('/postProduct', function(req, res){
 	var productdate = req.body.productDate;
 	var productname = req.body.productName;
 	var productprice = req.body.productPrice;
+
 	auth.onAuthStateChanged((firebaseUser) => {
 		if(firebaseUser){
 			var uId = firebaseUser.uid;
@@ -81,15 +82,23 @@ app.post('/postProduct', function(req, res){
 				proprice: productprice,
 				uid: uId,
 			};
+			var count;
+			// for(count = 0; count <= (/*childs of products*/); i++){
+
+			// }
 			var rootref = database.ref('PRODUCTS');
-			rootref.child('POSTS').set(obj);
+			rootref.child('POSTS').child('count').set(obj);
 			console.log("Product data sent!");
 		}
 	});
 });
 
-app.get('/landing', function(req,res){
-	res.render('landing');
+app.get('/home', function(req,res){
+	res.render('home');
+});
+
+app.get('/dashboard', function(req,res){
+	res.render('dashboard');
 });
 
 app.get('/productDetails', function(req, res){
