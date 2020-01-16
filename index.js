@@ -82,7 +82,7 @@ app.post('/postProduct', function(req, res){
 				uid: uId,
 			};
 			var rootref = database.ref('PRODUCTS');
-			rootref.child('POSTS').child().set(obj);
+			rootref.child('POSTS').set(obj);
 			console.log("Product data sent!");
 		}
 	});
