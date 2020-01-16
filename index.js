@@ -23,11 +23,11 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
-const rootref = database.ref('PROFILES');
 
 app.get('/', function(req, res) {
 	res.redirect('/login');
 });
+
 app.get('/login', function(req, res) {
 	res.render('login');
 });
@@ -39,10 +39,51 @@ app.post('/login', function(req, res) {
 	promise.catch((e) => console.log(e.message));
 	auth.onAuthStateChanged((firebaseUser) => {
 		if (firebaseUser) {
-			console.log('Logged In!');
+			var rootref = database.ref('PROFILES');
+			rootref.child('USERS').on('value', function(snapshot){ // print who was log in
+				console.log(snapshot.child(firebaseUser.uid).child('userName').val() + " logged in!");
+			});
 			res.redirect('/landing');
 		} else {
 			//res.redirect('/login');
+		}
+	});
+});
+app.get('/postProduct', function(req, res){
+	res.render('postProduct');
+});
+app.post('/postProduct', function(req, res){
+	// about
+	// cat
+	// extra
+	// maxquantity
+	// productdate
+	// productname
+	// productprice
+	// uid
+	var about = req.body.productAbout;
+	var cat = req.body.productCategory;
+	var extra = "";
+	var maxquantity = req.body.productQuantity;
+	var productdate = req.body.productDate;
+	var productname = req.body.productName;
+	var productprice = req.body.productPrice;
+	auth.onAuthStateChanged((firebaseUser) => {
+		if(firebaseUser){
+			var uId = firebaseUser.uid;
+			obj = {
+				about: about,
+				cat: cat,
+				extra: extra,
+				maxquantity: maxquantity,
+				proddate: productdate,
+				proname: productname,
+				proprice: productprice,
+				uid: uId,
+			};
+			var rootref = database.ref('PRODUCTS');
+			rootref.child('POSTS').child().set(obj);
+			console.log("Product data sent!");
 		}
 	});
 });
@@ -84,8 +125,9 @@ app.post('/register', function(req, res) {
 				userEmail: email,
 				userName: username
 			};
-			rootref.child('USERS').child(firebaseUser.uid).set(obj);
-			console.log("Signed In!");
+			var rootref = database.ref('PROFILES');
+			rootref.child('USERS').child(firebaseUser.uid).set(obj); // sending data to database
+			console.log("Data Sent!");
 			red.redirect('/login');
 		} else {
 			console.log('error');
@@ -107,7 +149,8 @@ app.get('/productDetail', function(req, res) {
 });
 
 app.get('/logout', function(req, res){
-	res.render('/login');
+	console.log("LoggedOut! Redirecting to Login Page");
+	res.render('login');
 });
 
 app.listen(3000, () => {
