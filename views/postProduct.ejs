@@ -1,107 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Meta tags -->
-    <titl>
-        </title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- stylesheets -->
-        <link rel="stylesheet" href="pro-cr-form.css" type="text/css" media="all">
-
-        <!-- google fonts  -->
-        <link
-            href="//fonts.googleapis.com/css?family=Alegreya+Sans:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
-            rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#touc").click(function () {
-                    $("#tyu").hide();
-                });
-                $("#tou").click(function () {
-                    $("#tyu").show();
-                });
-            });
-        </script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>post</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/postproduct.css">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700&display=swap" rel="stylesheet">
 </head>
-
-<body background="Early-freeze-may-await-waterlogged-crops_July_E.jpg">
-    <a href="/dashboard"><b>Dashboard</b></a>
-    <div class="w3ls-banner">
-        <div class="heading">
-            <h1>Crop Registration Form</h1>
-        </div>
-        <div class="container">
-            <div class="heading">
-                <h2>Please Enter Your Details</h2>
-                <p>Fill the application form below and submit.</p>
-            </div>
-            <div class="agile-form">
-                <form action="/postProduct" method="POST">
-                    <ul class="field-list">
-                        <li>
-                            <label class="form-label"> Name of the Product Category: <span class="form-required"> *</span></label>
-                            <div class="form-input">
-                                <select name="productCategory" placeholder="Enter Your Product Name Here" required>
-                                    <option>Fruits & Vegetables</option>
-                                    <option>Grains, Cereals & Pulses</option>
-                                    <option>Others</option>
-                                </select>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="form-label"> Name of the Product: <span class="form-required"> *</span></label>
-                            <div class="form-input">
-                                <input type="text" name="productName" placeholder="Enter Your Product Name Here" required>
-
-                            </div>
-                        </li>
-                        <li>
-                            <label class="form-label"> Price of your Product: <span class="form-required"> *</span></label>
-                            <div class="form-input">
-                                <input type="number" name="productPrice" placeholder="Enter Your Product Price Here" required>
-
-                            </div>
-                        </li>
-                        <li>
-                            <label class="form-label"> Instock (kgs):<span class="form-required"> * </span></label>
-                            <div class="form-input">
-                                <input type="number" name="productQuantity" placeholder="Enter the max quantity" required>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="form-label"> Date of Production: <span class="form-required"> *</span></label>
-                            <div class="form-input dob">
-                                <span class="form-sub-label">
-                                    <input type="date" name="productDate">
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <label class="form-label">
-                                Product Description:
-                                <span class="form-required"> * </span>
-                            </label>
-                            <div class="form-input add">
-                                <span class="form-sub-label">
-                                    <textarea row="50" cols="60" name="productAbout"
-                                        placeholder="Whatever you want to say about your Production" required></textarea>
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="submit_btn">
-                        <input type="submit" value="Submit">
+<body>
+    <nav class="navbar-default navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a style = "font-size: 22px" class="navbar-brand" href="/dashboard">SIH</a>
+          </div>
+      
+          <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav navbar-right"> 
+                   <li><a style = "font-size: 18px">Signed in as john</a></li>
+                   <li><a style = "font-size: 18px" href="/logout">Log Out</a></li>
+                 
+              </ul>
+          </div>
+          </div>
+       </nav>
+    <div class="container">
+          <div id="formoutline">
+            <form action="/dashboard" method="POST"> 
+                <h2 class="heading"><b>Post Your Product</b></h2>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Name:</label>
+                     <div class="col-sm-10">
+                     <input class="form-control" type="text" name="name" placeholder="Product Name">
+                     </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Price:</label>
+                    <div class="col-sm-10">
+                     <input class="form-control"type="number" name="price" placeholder="Price Per Kg">
                     </div>
-                </form>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Quantity:</label>
+                    <div class="col-sm-10">
+                     <input class="form-control"type="number" name="stock" placeholder="Total Quantity Available">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Production Date:</label>
+                    <div class="col-sm-10">
+                    <input class="form-control" type="date" name="dop">
+                    </div>
+               </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 control-label">Description:</label>
+                     <div class="col-sm-10">
+                    <input type="text" class="form-control name="description" placeholder="Description">
+                     </div>
+                </div>
+                <div class="form-group" style="text-align: center;margin: auto;">
+                    <button class="btn btn-primary" name="sumbit">Submit</button>
+              </div>
+            </form>
+            <div class="back">
+                <a href="/dashboard">Go Back</a>
             </div>
-        </div>
+            
+          </div>
     </div>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"
+            integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw"
+            crossorigin="anonymous"></script>
 </body>
-
 </html>

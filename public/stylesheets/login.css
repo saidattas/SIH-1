@@ -15,6 +15,7 @@ h1{
     padding: 5%;
     box-sizing: border-box;
     background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
 }
 .create{
     margin: auto;

@@ -1,0 +1,35 @@
+body{
+	background-color: rgb(245, 229, 229);
+}
+.heading{
+	padding: 20px;
+	text-align: center;
+}
+#formoutline{
+	width:60%;
+	margin:5% 20%;
+	border: 3px solid rgba(41, 36, 36, 0.753);
+	border-radius: 8px;
+}
+form{
+	margin-top: 3%;
+}
+.control-label{
+	font-size: 17px;
+	padding-top: 1%;
+}
+.form-control{
+	width: 70%;
+}
+.form-group{
+	margin-left: 10%;
+}
+nav{
+	width: 100%;
+}
+.back{
+	font-size: 18px;
+	margin: 2%;
+}
+
+

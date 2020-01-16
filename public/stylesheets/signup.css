@@ -11,9 +11,9 @@ h1{
 }
 .container {
     width: 50%;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin:2% auto;
     padding: 30px 30px 20px;
     box-sizing: border-box;
     background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
 }

@@ -52,15 +52,25 @@ app.post('/login', function(req, res) {
 app.get('/postProduct', function(req, res){
 	res.render('postProduct');
 });
+
 app.post('/postProduct', function(req, res){
-	// about
-	// cat
-	// extra
-	// maxquantity
-	// productdate
-	// productname
-	// productprice
-	// uid
+	const auth = firebase.auth();
+	auth.onAuthStateChanged((firebaseUser) => {
+		if(firebaseUser){
+			var count = 0;
+			exports.setCount = functions.database.ref('PRODUCTS/POSTS').onWrite(event => {
+				return event.data.ref.parent.once("value", (snapshot) => {
+				  const count = snapshot.numChildren();
+				  return event.data.ref.update({ count });
+				});
+			})
+			var rootref = database.ref('PRODUCTS');
+			rootref.child('POSTS').on('value', function(snapshot){
+				console.log(snapshot.val());
+			});
+		}
+	});
+
 	var about = req.body.productAbout;
 	var cat = req.body.productCategory;
 	var extra = "";
@@ -68,6 +78,8 @@ app.post('/postProduct', function(req, res){
 	var productdate = req.body.productDate;
 	var productname = req.body.productName;
 	var productprice = req.body.productPrice;
+
+	console.log("done");
 
 	auth.onAuthStateChanged((firebaseUser) => {
 		if(firebaseUser){
@@ -86,9 +98,9 @@ app.post('/postProduct', function(req, res){
 			// for(count = 0; count <= (/*childs of products*/); i++){
 
 			// }
-			var rootref = database.ref('PRODUCTS');
-			rootref.child('POSTS').child('count').set(obj);
-			console.log("Product data sent!");
+			// var rootref = database.ref('PRODUCTS');
+			// rootref.child('POSTS').child('count').set(obj);
+			// console.log("Product data sent!");
 		}
 	});
 });
