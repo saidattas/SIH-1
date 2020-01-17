@@ -9,8 +9,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-
-// Your web app's Firebase configuration
 var firebaseConfig = {
 	apiKey: 'AIzaSyCFCb5gEtIvhnEsmajaz3pQZLE87GuWsk4',
 	authDomain: 'sih-app-18e73.firebaseapp.com',
@@ -21,18 +19,20 @@ var firebaseConfig = {
 	appId: '1:741492458591:web:b74e50dd2f0f330048c7ea',
 	measurementId: 'G-SNG2EE3MS2'
 };
-
 firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
 
- var database = firebase.database();
 
 app.get('/', function(req, res) {
 	res.redirect('/login');
 });
 
+
 app.get('/login', function(req, res) {
 	res.render('login');
 });
+
+
 app.post('/login', function(req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
@@ -51,31 +51,23 @@ app.post('/login', function(req, res) {
 		}
 	});
 });
+
+
 app.get('/postProduct', function(req, res){
 	res.render('postProduct');
 });
 
+
 app.post('/postProduct', function(req, res){
-
-	console.log("StartDone!");
-
 	var ref = database.ref('PRODUCTS').child('POSTS');
 	ref.on('value', gotData, errData);
 
 	function gotData(data){
-		//console.log(data.val());
+		//console.log(data.val()); // print in json format
 		var products_in_DB = data.val();
-		var keys = Object.keys(products_in_DB);
-		console.log(keys);
-		console.log(keys.length);
-
-
-		// for(var i = 0; i < keys.length; i++){
-		// 	var k = keys[i];
-		// 	var initials = scores[k].initials;
-		// 	var score = scores[k].score;
-		// 	console.log(initials,scores);
-		// }
+		var keys = Object.keys(products_in_DB); // put all the data nodes in a list
+		console.log(keys); // print the whole list
+		console.log(keys.length); // print the key length
 	}
 
 	function errData(err){
@@ -83,22 +75,6 @@ app.post('/postProduct', function(req, res){
 		console.log(err);
 	}
 
-
-	var auth = firebase.auth();
-
-	auth.onAuthStateChanged((firebaseUser) => {
-		if(firebaseUser){
-			// exports.setCount = functions.firebase.database().ref('PROFILES').child('POSTS').onWrite(event => {
-			// 	return event.data.ref.parent.once("value", (snapshot) => {
-			// 	  const count = snapshot.numChildren();
-			// 	  console.log("Ajit" + count );
-			// 	  console.log(snapshot.child(count-1).val());
-			// 	  return event.data.ref.update({count}).val();
-			// 	});
-			// });
-		}
-	});
-	console.log("done1");
 	var about = req.body.productAbout;
 	var cat = req.body.productCategory;
 	var extra = "";
@@ -106,42 +82,18 @@ app.post('/postProduct', function(req, res){
 	var productdate = req.body.productDate;
 	var productname = req.body.productName;
 	var productprice = req.body.productPrice;
-
-	console.log("done2");
-
-	firebase.auth().onAuthStateChanged((firebaseUser) => {
-		if(firebaseUser){
-			var uId = firebaseUser.uid;
-			obj = {
-				about: about,
-				cat: cat,
-				extra: extra,
-				maxquantity: maxquantity,
-				proddate: productdate,
-				proname: productname,
-				proprice: productprice,
-				uid: uId,
-			};
-			// var rootref = database.ref('PRODUCTS');
-			// rootref.child('POSTS').on('value', function(snapshot){
-			// 	console.log(snapshot.child('count').val());
-			// });
-			var count;
-			// for(count = 0; count <= (/*childs of products*/); i++){
-			// var rootref = database.ref('PRODUCTS');
-			// rootref.child('POSTS').child('count').set(obj);
-			// console.log("Product data sent!");
-		}
-	});
 });
+
 
 app.get('/home', function(req,res){
 	res.render('home');
 });
 
+
 app.get('/dashboard', function(req,res){
 	res.render('dashboard');
 });
+
 
 app.get('/productDetails', function(req, res){
 	res.render('productDetails');
@@ -151,6 +103,8 @@ app.get('/productDetails', function(req, res){
 app.get('/register', function(req, res) {
 	res.render('register');
 });
+
+
 app.post('/register', function(req, res) {
 	var fname = req.body.fname;
 	var lname = req.body.lname;
@@ -188,6 +142,7 @@ app.post('/register', function(req, res) {
 	res.redirect('/login');
 });
 
+
 app.get('/myAccount', function(req, res) {
 	var ref = database.ref('PROFILES');
 	ref.child('USERS').on('value', function(snapshot) {
@@ -195,14 +150,17 @@ app.get('/myAccount', function(req, res) {
 	});
 });
 
+
 app.get('/productDetail', function(req, res) {
 	res.render('productDetails');
 });
+
 
 app.get('/logout', function(req, res){
 	console.log("LoggedOut! Redirecting to Login Page");
 	res.render('login');
 });
+
 
 app.listen(3000, () => {
 	console.log('SERVER IS RUNNING ON PORT 3000!');
