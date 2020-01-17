@@ -6,7 +6,7 @@
   		<meta http-eqqv="X-UA-Compatible" content="ie=edge">
         <title>Home</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/stylesheets/main.css">
+        <link rel="stylesheet" href="/stylesheets/dashboard.css">
     </head>
     <body>
 <nav class="navbar-default navbar-inverse">
@@ -28,28 +28,44 @@
 <br>
 <br>
 <div class="container">
-	<header class="jumbotron">
-		<div class="container">
-			  <h1>SIH page</h1>
-		  <p>Sale and buy products</p>
-		  <p>
-			<a class="btn btn-lg btn-primary" href="/postProduct">Post your product</a>
-		  </p>
+    <div class="row header justify-content-between">
+      <div col-lg-6 col-sm-6>
+       <!-- <img src="" style="width: 100px;" alt="image"> -->
+      </div>
+      <div header col-lg-6 col-sm-6>
+        <h1>SIH page</h1>
+        <h2>Sale and buy products</h2>
+        <p>
+        <a class="btn btn-lg btn-primary" href="/postProduct">Post your product</a>
+        </p>
+      </div>
 		</div>	
-	</header>
+    	
    <div class="row text-center" style="display:flex;flex-wrap: wrap;">
+    <div class="col-md-4 col-sm-6">
+      <div class="thumbnail">
+        <img src="/imgs/crop.jpg" alt="img">
+         <div class="caption">
+           <h4>product name</h4>
+        </div>
+         <p>
+           <a href="/productDetails" class="btn btn-primary">More Info</a>
+         </p>
+       </div>
+     </div>
      <div class="col-md-4 col-sm-6">
-       <div class="thumbnail">
-         <img src="/imgs/field.jpeg" alt="img">
-          <div class="caption">
-            <h4>product name</h4>
-         </div>
-				  <p>
-					  <a href="/productDetails" class="btn btn-primary">More Info</a>
-				  </p>
-                  </div>
-            </div>
+      <div class="thumbnail">
+        <img src="/imgs/crop.jpg" alt="img">
+         <div class="caption">
+           <h4>product name</h4>
+        </div>
+         <p>
+           <a href="/productDetails" class="btn btn-primary">More Info</a>
+         </p>
+       </div>
+     </div>
     </div>
+    
 </div>
 <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
