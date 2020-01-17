@@ -1,13 +1,14 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
-// var admin = require('firebase-admin');
 var firebase = require('firebase');
+require('firebase/auth');
+require('firebase/database');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-require('firebase/auth');
-require('firebase/database');
+
+
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -22,7 +23,8 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-var database = firebase.database();
+
+ var database = firebase.database();
 
 app.get('/', function(req, res) {
 	res.redirect('/login');
@@ -41,7 +43,7 @@ app.post('/login', function(req, res) {
 		if (firebaseUser) {
 			var rootref = database.ref('PROFILES');
 			rootref.child('USERS').on('value', function(snapshot){ // print who was log in
-				console.log(snapshot.child(firebaseUser.uid).child('userName').val() + " logged in!");
+				console.log(snapshot.child(firebaseUser.uid).child('userName').val() + " is Madarchod!");
 			});
 			res.redirect('/dashboard');
 		} else {
@@ -54,23 +56,49 @@ app.get('/postProduct', function(req, res){
 });
 
 app.post('/postProduct', function(req, res){
-	const auth = firebase.auth();
+
+	console.log("StartDone!");
+
+	var ref = database.ref('PRODUCTS').child('POSTS');
+	ref.on('value', gotData, errData);
+
+	function gotData(data){
+		//console.log(data.val());
+		var products_in_DB = data.val();
+		var keys = Object.keys(products_in_DB);
+		console.log(keys);
+		console.log(keys.length);
+
+
+		// for(var i = 0; i < keys.length; i++){
+		// 	var k = keys[i];
+		// 	var initials = scores[k].initials;
+		// 	var score = scores[k].score;
+		// 	console.log(initials,scores);
+		// }
+	}
+
+	function errData(err){
+		console.log('Error!');
+		console.log(err);
+	}
+
+
+	var auth = firebase.auth();
+
 	auth.onAuthStateChanged((firebaseUser) => {
 		if(firebaseUser){
-			var count = 0;
-			exports.setCount = functions.database.ref('PRODUCTS/POSTS').onWrite(event => {
-				return event.data.ref.parent.once("value", (snapshot) => {
-				  const count = snapshot.numChildren();
-				  return event.data.ref.update({ count });
-				});
-			})
-			var rootref = database.ref('PRODUCTS');
-			rootref.child('POSTS').on('value', function(snapshot){
-				console.log(snapshot.val());
-			});
+			// exports.setCount = functions.firebase.database().ref('PROFILES').child('POSTS').onWrite(event => {
+			// 	return event.data.ref.parent.once("value", (snapshot) => {
+			// 	  const count = snapshot.numChildren();
+			// 	  console.log("Ajit" + count );
+			// 	  console.log(snapshot.child(count-1).val());
+			// 	  return event.data.ref.update({count}).val();
+			// 	});
+			// });
 		}
 	});
-
+	console.log("done1");
 	var about = req.body.productAbout;
 	var cat = req.body.productCategory;
 	var extra = "";
@@ -79,9 +107,9 @@ app.post('/postProduct', function(req, res){
 	var productname = req.body.productName;
 	var productprice = req.body.productPrice;
 
-	console.log("done");
+	console.log("done2");
 
-	auth.onAuthStateChanged((firebaseUser) => {
+	firebase.auth().onAuthStateChanged((firebaseUser) => {
 		if(firebaseUser){
 			var uId = firebaseUser.uid;
 			obj = {
@@ -94,10 +122,12 @@ app.post('/postProduct', function(req, res){
 				proprice: productprice,
 				uid: uId,
 			};
+			// var rootref = database.ref('PRODUCTS');
+			// rootref.child('POSTS').on('value', function(snapshot){
+			// 	console.log(snapshot.child('count').val());
+			// });
 			var count;
 			// for(count = 0; count <= (/*childs of products*/); i++){
-
-			// }
 			// var rootref = database.ref('PRODUCTS');
 			// rootref.child('POSTS').child('count').set(obj);
 			// console.log("Product data sent!");
