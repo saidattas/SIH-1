@@ -74,14 +74,7 @@ app.post('/postProduct', function(req, res){
 		console.log('Error!');
 		console.log(err);
 	}
-
-	var about = req.body.productAbout;
-	var cat = req.body.productCategory;
-	var extra = "";
-	var maxquantity = req.body.productQuantity;
-	var productdate = req.body.productDate;
-	var productname = req.body.productName;
-	var productprice = req.body.productPrice;
+	// ToDO: Post the data to DB
 });
 
 
