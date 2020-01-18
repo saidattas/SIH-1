@@ -43,7 +43,7 @@ app.post('/login', function(req, res) {
 		if (firebaseUser) {
 			var rootref = database.ref('PROFILES');
 			rootref.child('USERS').on('value', function(snapshot){ // print who was log in
-				console.log(snapshot.child(firebaseUser.uid).child('userName').val() + " is Madarchod!");
+				console.log(snapshot.child(firebaseUser.uid).child('userName').val() + " is Logged in!");
 			});
 			res.redirect('/dashboard');
 		} else {
@@ -75,6 +75,15 @@ app.post('/postProduct', function(req, res){
 		console.log(err);
 	}
 	// ToDO: Post the data to DB
+
+	// var about = req.body.description ;
+	// var cat = req.body.;
+	// var extra = "";
+	// var maxquantity = req.body.stock;
+	// var proddate = req.body.dop;
+	// var proname = req.body.name;
+	// var proprice = req.body.price;
+
 });
 
 
