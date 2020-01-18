@@ -59,32 +59,56 @@ app.get('/postProduct', function(req, res){
 
 
 app.post('/postProduct', function(req, res){
-	var ref = database.ref('PRODUCTS').child('POSTS');
-	ref.on('value', gotData, errData);
 
-	function gotData(data){
-		//console.log(data.val()); // print in json format
-		var products_in_DB = data.val();
-		var keys = Object.keys(products_in_DB); // put all the data nodes in a list
-		console.log(keys); // print the whole list
-		console.log(keys.length); // print the key length
-	}
-
-	function errData(err){
-		console.log('Error!');
-		console.log(err);
-	}
 	// ToDO: Post the data to DB
 
-	// var about = req.body.description ;
-	// var cat = req.body.;
-	// var extra = "";
-	// var maxquantity = req.body.stock;
-	// var proddate = req.body.dop;
-	// var proname = req.body.name;
-	// var proprice = req.body.price;
+	var about = req.body.description;
+	var cat = req.body.protype;
+	var extra = "";
+	var maxquantity = req.body.stock;
+	var proddate = req.body.dop;
+	var proname = req.body.name;
+	var proprice = req.body.price;
 
+
+
+			var ref = database.ref('PRODUCTS').child('POSTS');
+			ref.on('value', gotData, errData);
+			function gotData(data){
+				//console.log(data.val()); // print in json format
+				var products_in_DB = data.val();
+				var keys = Object.keys(products_in_DB); // put all the data nodes in a list
+				//console.log(keys); // print the whole list
+				// console.log(keys.length + '#1');// print the key length
+
+				var auth = firebase.auth();
+				auth.onAuthStateChanged((firebaseUser) => {
+					if(firebaseUser){
+						uId = firebaseUser.uid;
+						var obj = {
+							about: about,
+							cat: cat,
+							extra: extra,
+							maxquantity: maxquantity,
+							proddate: proddate,
+							proname: proname,
+							proprice: proprice,
+							uid: uId,
+						};
+
+						var rootref = database.ref('PRODUCTS');
+						rootref.child('POSTS').child(keys.length).set(obj);
+					}
+				});
+
+			}
+
+			function errData(err){
+				console.log('Error!');
+				console.log(err);
+			}
 });
+
 
 
 app.get('/home', function(req,res){
