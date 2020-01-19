@@ -110,10 +110,32 @@ app.get('/home', function(req,res){
 
 app.get('/dashboard', function(req,res){
 	res.render('dashboard');
-	var rootref = database.ref('PRODUCTS');
-	rootref.child('POSTS').on('value', function(snapshot){
-		console.log(snapshot.val());
-	});
+	// var rootref = database.ref('PRODUCTS');
+	// rootref.child('POSTS').on('value', function(snapshot){
+	// 	console.log(snapshot.val());
+	// });
+
+	var ref = database.ref('PRODUCTS').child('POSTS');
+	ref.on('value', gotData, errData);
+
+	function gotData(data){
+		var products_in_DB = data.val();
+		var keys = Object.keys(products_in_DB);
+
+		for(var i = 0; i<keys.length; i++){
+			var rootref = database.ref('PRODUCTS');
+			rootref.child('POSTS').on('value', function(snapshot){
+				console.log(snapshot.child(i).val());
+				console.log("#");
+			});
+		}
+	}
+
+	function errData(err){
+		console.log('Error!');
+		console.log(err);
+	}
+
 });
 
 
