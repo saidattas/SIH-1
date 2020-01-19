@@ -125,8 +125,9 @@ app.get('/dashboard', function(req,res){
 		for(var i = 0; i<keys.length; i++){
 			var rootref = database.ref('PRODUCTS');
 			rootref.child('POSTS').on('value', function(snapshot){
+				console.log(i+ ": ");
 				console.log(snapshot.child(i).val());
-				console.log("#");
+
 			});
 		}
 	}
