@@ -42,28 +42,19 @@
 		</div>	
     	
    <div class="row text-center" style="display:flex;flex-wrap: wrap;">
-    <div class="col-md-4 col-sm-6">
-      <div class="thumbnail">
-        <img src="/imgs/crop.jpg" alt="img">
-         <div class="caption">
-           <h4>product name</h4>
-        </div>
-         <p>
-           <a href="/productDetails" class="btn btn-primary">More Info</a>
-         </p>
-       </div>
-     </div>
+    <% post.forEach(function(post){ %>
      <div class="col-md-4 col-sm-6">
       <div class="thumbnail">
         <img src="/imgs/crop.jpg" alt="img">
          <div class="caption">
-           <h4>product name</h4>
+           <h4><%= post.proname %></h4>
         </div>
          <p>
            <a href="/productDetails" class="btn btn-primary">More Info</a>
          </p>
        </div>
      </div>
+     <% }); %>
     </div>
     
 </div>
