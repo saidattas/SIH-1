@@ -79,7 +79,7 @@ app.post('/postProduct', function(req, res){
 		auth.onAuthStateChanged((firebaseUser) => {
 			if(firebaseUser){
 				uId = firebaseUser.uid;
-				var obj = {
+				var obj = {		//console.log(data.val()); // print in json format
 					about: about,
 					cat: cat,
 					extra: extra,
@@ -103,8 +103,6 @@ app.post('/postProduct', function(req, res){
 	}
 });
 
-
-
 app.get('/home', function(req,res){
 	res.render('home');
 });
@@ -112,18 +110,10 @@ app.get('/home', function(req,res){
 
 app.get('/dashboard', function(req,res){
 	res.render('dashboard');
-});
-
-app.post('/dashboard', function(req, res){
 	var rootref = database.ref('PRODUCTS');
 	rootref.child('POSTS').on('value', function(snapshot){
 		console.log(snapshot.val());
-	},
-	function (err){
-		console.log('Error!');
-		console.log(err);
-	}
-	);
+	});
 });
 
 
