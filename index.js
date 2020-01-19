@@ -74,7 +74,7 @@ app.post('/postProduct', function(req, res) {
 			if (firebaseUser) {
 				uId = firebaseUser.uid;
 				var obj = {
-					//console.log(data.val()); // print in json format
+					// console.log(data.val()); // print in json format
 					about: about,
 					cat: cat,
 					extra: extra,
@@ -142,28 +142,6 @@ app.post('/register', function(req, res) {
 	});
 	res.redirect('/login');
 });
-// app.get('/dashboard', function(req, res) {
-// 	// var rootref = database.ref('PRODUCTS');
-// 	// rootref.child('POSTS').on('value', function(snapshot){
-// 	// 	console.log(snapshot.val());
-// 	// });
-
-// 	var ref = database.ref('PRODUCTS').child('POSTS');
-// 	ref.once('value', (data) => {
-// 		var products_in_DB = data.val();
-// 		var keys = Object.keys(products_in_DB);
-// 		const keylength = keys.length;
-// 		for (var i = 0; i < keylength; i++) {
-// 			var rootref = database.ref('PRODUCTS');
-// 			rootref.child('POSTS').on('value', function(snapshot) {
-// 				console.log(i + ': ');
-// 				console.log(snapshot.child(i).val());
-// 			});
-// 		}
-// 	});
-
-// 	res.render('dashboard');
-// });
 app.get('/dashboard', function(req, res) {
 	var ref = database.ref('PRODUCTS').child('POSTS');
 	ref.once('value', (data) => {
