@@ -144,12 +144,21 @@ app.post('/register', function(req, res) {
 });
 app.get('/dashboard', function(req, res) {
 	var ref = database.ref('PRODUCTS').child('POSTS');
+	const auth = firebase.auth();
 	ref.once('value', (data) => {
 		var rootref = database.ref('PRODUCTS');
 		rootref.child('POSTS').once('value', function(snapshot) {
 			var tempdata = snapshot.val();
 			console.log(tempdata);
-			res.render('dashboard', { post: tempdata });
+			auth.onAuthStateChanged((firebaseUser) => {
+				if (firebaseUser) {
+					var rootref = database.ref('PROFILES');
+					rootref.child('USERS').on('value', function(snapshot) {
+						var user = snapshot.child(firebaseUser.uid).child('userName').val();
+						res.render('dashboard', { post: tempdata, currentuser: user });
+					});
+				}
+			});
 		});
 	});
 	// res.render('dashboard');
