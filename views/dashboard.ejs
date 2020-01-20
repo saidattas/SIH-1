@@ -28,19 +28,22 @@
 <br>
 <br>
 <div class="container">
-    <div class="row header justify-content-between">
-      <div col-lg-6 col-sm-6>
-       <!-- <img src="" style="width: 100px;" alt="image"> -->
+  <div class="container">
+    <div class="header">
+      <div class="row">
+      <div class="col-lg-6 col-sm-6">
+       <img class="logo" src="/imgs/logo.jpeg" alt="logo">
       </div>
-      <div header col-lg-6 col-sm-6>
-        <h1>DashBoard</h1>
-        <h2>Sale and buy products</h2>
-        <p>
-        <a class="btn btn-lg btn-primary" href="/postProduct">Post your product</a>
-        </p>
+      <div class="col-lg-6 col-sm-6">
+       <h2>Sale and Buy Products</h2>
+          <p>
+          <a class="btn btn-lg btn-primary" href="/postProduct">Post your product</a>
+          </p>
       </div>
 		</div>	
-    	
+  </div>
+  </div>
+    
    <div class="row text-center" style="display:flex;flex-wrap: wrap;">
     <% post.forEach(function(post){ %>
      <div class="col-md-4 col-sm-6">
@@ -48,7 +51,7 @@
         <% if(post.cat=="Fruits"){ %>
              <img src="/imgs/fruits.png" alt="img">
           <% } %>
-          <% if(post.cat=="Cereals/pulses/grains"){ %>
+          <% if(post.cat=="Cereals/Pulses"){ %>
              <img src="/imgs/cereals.jpg" alt="img">
           <% } %>
           <% if(post.cat=="Vegetables"){ %>

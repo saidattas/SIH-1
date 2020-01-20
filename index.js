@@ -149,7 +149,7 @@ app.get('/dashboard', function(req, res) {
 		var rootref = database.ref('PRODUCTS');
 		rootref.child('POSTS').once('value', function(snapshot) {
 			var tempdata = snapshot.val();
-			console.log(tempdata);
+			// console.log(tempdata);
 			auth.onAuthStateChanged((firebaseUser) => {
 				if (firebaseUser) {
 					var rootref = database.ref('PROFILES');

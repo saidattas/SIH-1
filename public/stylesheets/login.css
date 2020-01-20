@@ -14,11 +14,18 @@ h1{
     margin-top: 10%;
     padding: 5%;
     box-sizing: border-box;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     box-shadow:  0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
 }
 .create{
     margin: auto;
     padding-right: 30px;
+}
+.logo{
+    margin: 20px;
+    width: 70%;
+    margin-left: 10%;
+    border-radius: 8px;
+    box-shadow:  0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
 }
