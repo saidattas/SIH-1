@@ -181,7 +181,7 @@ app.get('/logout', function(req, res) {
 	}).catch(function(error) {
 		console.log(error);
 	});
-	res.render('login');
+	res.redirect('login');
 });
 
 app.listen(process.env.PORT || 3000, () => {
