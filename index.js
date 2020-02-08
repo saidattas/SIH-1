@@ -184,6 +184,6 @@ app.get('/logout', function(req, res) {
 	res.render('login');
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
 	console.log('SERVER IS RUNNING ON PORT 3000!');
 });
