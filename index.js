@@ -176,7 +176,11 @@ app.get('/productDetails', function(req, res) {
 });
 
 app.get('/logout', function(req, res) {
-	console.log('LoggedOut! Redirecting to Login Page');
+	firebase.auth().signOut().then(function() {
+		console.log("Logged Out Successfully!");
+	}).catch(function(error) {
+		console.log(error);
+	});
 	res.render('login');
 });
 
